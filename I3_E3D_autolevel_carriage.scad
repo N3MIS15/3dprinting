@@ -43,7 +43,7 @@ module servo_box() {
 		translate([-29.25,0,-1]) rotate([90,0,0]) cylinder(h=65, r=1.5+(hole_padding/2), center=true, $fn=15);
 		translate([-29.25,0,27]) rotate([90,0,0]) cylinder(h=65, r=1.5+(hole_padding/2), center=true, $fn=15);
 		translate([-37, 7, 35]) rotate([90,0,90]) cylinder(h=10, r=35, center=true, $fn=6);
-		translate([-21, 8, 15]) rotate([90,0,90]) cylinder(h=10, r=6, center=true, $fn=8);
+		translate([-21, 7, 15]) rotate([90,0,90]) cylinder(h=10, r=8, center=true, $fn=8);
 	}
 }
 
