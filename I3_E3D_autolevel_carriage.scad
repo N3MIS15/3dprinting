@@ -62,8 +62,16 @@ module main_body() {
 			// Fan mount (heatsink)
 			if(heatsink_fan == true) {	
 				translate([0, -22, 26]) rotate([90,270,0]) fan();
-				translate([0, -22, 0]) cube([40,4,14], center=true);
-				translate([21.5, -22, 3.5]) cube([3,4,21], center=true);
+
+				if(bowden_hotend == true) {
+					translate([0, -22, 0]) cube([40,4,14], center=true);
+					translate([21.5, -22, 3.5]) cube([3,4,21], center=true);
+				}
+				else {
+					translate([0, -22, -3]) cube([40,4,20], center=true);
+					translate([21.5, -22, 0.5]) cube([3,4,27], center=true);
+				}
+
 				// Heatsink bolt dimples
 				translate([-hsb_x_offset,-24.5,hsb_z_offset]) rotate([90,0,180]) cylinder(h=1, r1=(heatsink_bolt*1.75)/2, r2=(heatsink_bolt*2.25)/2, center=true, $fn=30);
 				translate([hsb_x_offset,-24.5,hsb_z_offset]) rotate([90,0,180]) cylinder(h=1, r1=(heatsink_bolt*1.75)/2, r2=(heatsink_bolt*2.25)/2, center=true, $fn=30);
