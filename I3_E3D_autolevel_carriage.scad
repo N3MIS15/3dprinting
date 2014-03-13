@@ -1,16 +1,17 @@
 // Prusa I3 E3D-v5 Auto Levelling Carriage
 // Created by David "N3MIS15" Gray 2014
 
-heatsink_outer	= 16;		// Outside of nozzle mounting groove
-heatsink_inner	= 12;		// Inside of nozzle mounting groove
-bowden_hotend	= true;		// If you have Bowden version or not ("false" requires carriage to be tapped)
-heatsink_bolt	= 4;		// Bolt size to hold heatsink (3 or 4mm)
-heatsink_nut	= 7.66;		// Nut size from point to point (M3=6.01, M4=7.66)
-bowden_thread	= 11;		// Hole size for bowden mount (8.8 if using 1/8" BSP tap)
-heatsink_fan	= true;		// Add fan on heatsink side
-servo_fan		= true;		// Add fan on servo side
-servo_hole		= 7.11;		// Servo hole on servo arm
-hole_padding	= 0.7;		// Extra allowance on holes (3mm hole becomes 3mm+padding) 
+heatsink_outer		= 16;		// Outside of nozzle mounting groove
+heatsink_inner		= 12;		// Inside of nozzle mounting groove
+bowden_hotend		= true;		// If you have Bowden version or not ("false" requires carriage to be tapped)
+heatsink_bolt		= 4;		// Bolt size to hold heatsink (3 or 4mm)
+heatsink_nut		= 7.66;		// Nut size from point to point (M3=6.01, M4=7.66)
+bowden_thread		= 11;		// Hole size for bowden mount (8.8 if using 1/8" BSP tap)
+heatsink_side_fan	= true;		// Add fan on heatsink side
+servo_side_fan		= true;		// Add fan on servo side
+heatsink_fan		= false;	// Add fan to cool heatsink
+servo_hole			= 7.11;		// Servo hole on servo arm
+hole_padding		= 0.7;		// Extra allowance on holes (3mm hole becomes 3mm+padding)
 
 
 
@@ -58,17 +59,28 @@ module main_body() {
 				translate([21, 0, 10]) cube([4,40,46], center=true);
 			}
 
-			// Heatsink bolt dimples
-			translate([-hsb_x_offset,-20.5,hsb_z_offset]) rotate([90,0,180]) cylinder(h=1, r1=(heatsink_bolt*1.75)/2, r2=(heatsink_bolt*2.25)/2, center=true, $fn=30);
-			translate([hsb_x_offset,-20.5,hsb_z_offset]) rotate([90,0,180]) cylinder(h=1, r1=(heatsink_bolt*1.75)/2, r2=(heatsink_bolt*2.25)/2, center=true, $fn=30);
-
-			// Fan mount
+			// Fan mount (heatsink)
 			if(heatsink_fan == true) {	
+				translate([0, -22, 26]) rotate([90,270,0]) fan();
+				translate([0, -22, 0]) cube([40,4,14], center=true);
+				translate([21.5, -22, 3.5]) cube([3,4,21], center=true);
+				// Heatsink bolt dimples
+				translate([-hsb_x_offset,-24.5,hsb_z_offset]) rotate([90,0,180]) cylinder(h=1, r1=(heatsink_bolt*1.75)/2, r2=(heatsink_bolt*2.25)/2, center=true, $fn=30);
+				translate([hsb_x_offset,-24.5,hsb_z_offset]) rotate([90,0,180]) cylinder(h=1, r1=(heatsink_bolt*1.75)/2, r2=(heatsink_bolt*2.25)/2, center=true, $fn=30);
+			}
+			else {
+				// Heatsink bolt dimples
+				translate([-hsb_x_offset,-20.5,hsb_z_offset]) rotate([90,0,180]) cylinder(h=1, r1=(heatsink_bolt*1.75)/2, r2=(heatsink_bolt*2.25)/2, center=true, $fn=30);
+				translate([hsb_x_offset,-20.5,hsb_z_offset]) rotate([90,0,180]) cylinder(h=1, r1=(heatsink_bolt*1.75)/2, r2=(heatsink_bolt*2.25)/2, center=true, $fn=30);
+			}
+
+			// Fan mount (heatsink side)
+			if(heatsink_side_fan == true) {
 				translate([38.8, 0, 50]) rotate([0,-45,0]) fan();
 			}
 
-			// Fan mount (servo)
-			if(servo_fan == true) {	
+			// Fan mount (servo side)
+			if(servo_side_fan == true) {
 				translate([-38.8, 0, 50]) rotate([0,-45,180]) fan();
 			}
 
